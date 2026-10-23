@@ -1,0 +1,76 @@
+@model List<MigrationUpload>
+@{
+    ViewData["Title"] = "Migration Upload";
+}
+
+<h1 class="h3 mb-3">Migration table upload</h1>
+
+@if (TempData["Success"] is string success)
+{
+    <div class="alert alert-success">@success</div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <strong>The file was not saved.</strong> Fix these and upload again:
+        <ul class="mb-0 mt-2">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form asp-action="Upload" method="post" enctype="multipart/form-data">
+            <label for="file" class="form-label">CSV file</label>
+            <div class="input-group">
+                <input type="file" id="file" name="file" accept=".csv,text/csv" class="form-control" required />
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+            <div class="form-text">
+                Uploading as <strong>@User.Identity?.Name</strong> (<code>@User.FindFirstValue(ClaimTypes.NameIdentifier)</code>).
+                Columns must match the <a href="~/samples/migration_sample.csv" download>sample CSV</a>.
+            </div>
+        </form>
+    </div>
+</div>
+
+<h2 class="h5">Recent uploads</h2>
+@if (Model.Count == 0)
+{
+    <p class="text-muted">Nothing uploaded yet.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>File</th>
+                    <th>Uploaded by</th>
+                    <th>Uploaded at</th>
+                    <th class="text-end">Rows</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var upload in Model)
+                {
+                    <tr>
+                        <td>@upload.Id</td>
+                        <td>@upload.FileName</td>
+                        <td><code>@upload.UploadedBy</code> @upload.Uploader?.FullName</td>
+                        <td>@upload.UploadedAt.ToLocalTime().ToString("dd MMM yyyy, HH:mm")</td>
+                        <td class="text-end">@upload.RowCount</td>
+                        <td class="text-end"><a asp-action="Details" asp-route-id="@upload.Id">View</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

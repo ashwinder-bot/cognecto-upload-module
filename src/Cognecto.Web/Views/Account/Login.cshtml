@@ -1,0 +1,32 @@
+@model List<AppUser>
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-5">
+        <div class="card mt-4">
+            <div class="card-body">
+                <h1 class="h4">Sign in</h1>
+                <p class="text-muted small">Demo sign-in. Pick an officer; their ID is saved with every file they upload.</p>
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger py-2">@ViewData.ModelState.Values.SelectMany(v => v.Errors).First().ErrorMessage</div>
+                }
+
+                <form asp-action="Login" method="post">
+                    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+                    <label for="userId" class="form-label">Officer</label>
+                    <select id="userId" name="userId" class="form-select mb-3" required>
+                        @foreach (var user in Model)
+                        {
+                            <option value="@user.UserId">@user.UserId · @user.FullName (@user.Designation)</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

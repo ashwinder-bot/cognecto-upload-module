@@ -1,0 +1,19 @@
+AC No. & Name,Existing Part No.,Existing Part Name,Existing Section,Break-up Type,Existing Electors,Rationalized Part No.,Rationalized Part Name,Rationalized Section,Rationalized Electors,Action
+201-abc,1,abc,1-abc,,600,1,abc,1-abc,600,No action
+201-abc,2,efg,1-efg,Elector,1-1000,2,efg,1-efg,1000,No action
+201-abc,2,efg,1-efg,Elector,1001-1600,2N1,efg,1-hij,600,"Creation of New PS, New Section, Elector Movement request"
+201-abc,3,hij,1-hij,,800,3,hij,1-hij,800,No action
+201-abc,4,klm,1-klm,,500,4,klm,1-klm,500,No action
+201-abc,4,klm,2-xyz,,500,4N1,klm,2-xyz,500,"Creation of New PS, Elector Movement request"
+201-abc,5,nop,1-nop,,950,5,nop,1-nop,950,No action
+201-abc,6,qrs,1-qrs,Elector,1-1200,6,qrs,1-qrs,1200,No action
+201-abc,6,qrs,1-qrs,Elector,1201-1750,6N1,qrs,2-qrs,550,"Creation of New PS, New Section, Elector Movement request"
+201-abc,7,tuv,1-tuv,,720,7,tuv,1-tuv,720,No action
+201-abc,7,tuv,2-mno,,430,7N1,tuv,2-mno,430,"Creation of New PS, Elector Movement request"
+201-abc,8,wxy,1-wxy,,1100,8,wxy,1-wxy,1100,No action
+202-def,1,pqr,1-pqr,,680,1,pqr,1-pqr,680,No action
+202-def,2,stu,1-stu,Elector,1-1000,2,stu,1-stu,1000,No action
+202-def,2,stu,1-stu,Elector,1001-1450,2N1,stu,1-vwx,450,"Creation of New PS, New Section, Elector Movement request"
+202-def,3,vwx,1-vwx,,900,3,vwx,1-vwx,900,No action
+202-def,3,vwx,2-yza,,350,3N1,vwx,2-yza,350,"Creation of New PS, Elector Movement request"
+202-def,4,bcd,1-bcd,,760,4,bcd,1-bcd,760,No action
