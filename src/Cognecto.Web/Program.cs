@@ -2,6 +2,7 @@ using Cognecto.Web.Data;
 using Cognecto.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,10 @@ if (string.IsNullOrWhiteSpace(connectionString))
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddSingleton<MigrationCsvParser>();
+builder.Services.AddScoped<MigrationUploadWriter>();
+builder.Services.Configure<UploadOptions>(builder.Configuration.GetSection(UploadOptions.Section));
+builder.Services.AddSingleton(sp => new UploadGate(
+    sp.GetRequiredService<IOptions<UploadOptions>>().Value.MaxConcurrentUploads));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => options.LoginPath = "/Account/Login");
 
@@ -26,6 +31,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/Home/Status/{0}");
 app.UseHttpsRedirection();
 app.UseRouting();
 

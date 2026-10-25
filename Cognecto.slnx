@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Cognecto.Web/Cognecto.Web.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Cognecto.Web.Tests/Cognecto.Web.Tests.csproj" />
+  </Folder>
 </Solution>

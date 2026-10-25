@@ -1,0 +1,13 @@
+@model int
+@{
+    var message = Model switch
+    {
+        404 => "This page or upload does not exist, or it belongs to another district.",
+        403 => "You do not have access to this page.",
+        _ => "The request could not be completed.",
+    };
+}
+
+<h1 class="h3 mb-3">@ViewData["Title"]</h1>
+<p>@message</p>
+<a asp-controller="Migration" asp-action="Index">&larr; Back to uploads</a>

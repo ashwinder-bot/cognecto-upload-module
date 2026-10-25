@@ -113,7 +113,15 @@ public partial class MigrationCsvParser
     {
         public List<string> Errors { get; } = [];
 
-        public string Optional(string column) => csv.GetField(index[Normalize(column)])?.Trim() ?? "";
+        public string Optional(string column)
+        {
+            var value = csv.GetField(index[Normalize(column)])?.Trim() ?? "";
+            if (!value.Contains('\0'))
+                return value;
+            // Postgres text cannot hold NUL; it shows up when a binary or UTF-16 file is renamed to .csv.
+            Errors.Add($"{column} contains an invalid character (check the file is saved as CSV UTF-8)");
+            return value.Replace("\0", "");
+        }
 
         public string Required(string column)
         {

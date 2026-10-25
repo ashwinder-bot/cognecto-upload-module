@@ -9,4 +9,5 @@ public class AppUser
     [Key, Column("user_id")] public string UserId { get; set; } = "";
     [Column("full_name")] public string FullName { get; set; } = "";
     [Column("designation")] public string Designation { get; set; } = "";
+    [Column("district_id")] public string DistrictId { get; set; } = "";
 }

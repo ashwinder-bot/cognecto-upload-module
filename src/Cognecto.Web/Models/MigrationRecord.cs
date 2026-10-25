@@ -9,6 +9,7 @@ public class MigrationRecord
     [Column("id")] public long Id { get; set; }
     [Column("upload_id")] public long UploadId { get; set; }
     [Column("uploaded_by")] public string UploadedBy { get; set; } = "";
+    [Column("district_id")] public string DistrictId { get; set; } = "";
     [Column("row_no")] public int RowNo { get; set; }
     [Column("ac_no_name")] public string AcNoName { get; set; } = "";
 

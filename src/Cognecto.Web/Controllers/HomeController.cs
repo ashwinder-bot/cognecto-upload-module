@@ -11,4 +11,13 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    // Shown for 4xx responses that have no body of their own, e.g. an upload that does not exist.
+    // id is the status code, from UseStatusCodePagesWithReExecute("/Home/Status/{0}").
+    public IActionResult Status(int id)
+    {
+        Response.StatusCode = id;
+        ViewData["Title"] = id == 404 ? "Not found" : $"Error {id}";
+        return View(id);
+    }
 }

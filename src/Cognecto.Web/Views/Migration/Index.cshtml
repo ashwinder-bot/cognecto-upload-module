@@ -25,21 +25,21 @@
 
 <div class="card mb-4">
     <div class="card-body">
-        <form asp-action="Upload" method="post" enctype="multipart/form-data">
+        <form asp-action="Upload" method="post" enctype="multipart/form-data" id="upload-form">
             <label for="file" class="form-label">CSV file</label>
             <div class="input-group">
                 <input type="file" id="file" name="file" accept=".csv,text/csv" class="form-control" required />
-                <button type="submit" class="btn btn-primary">Upload</button>
+                <button type="submit" class="btn btn-primary" id="upload-button">Upload</button>
             </div>
             <div class="form-text">
-                Uploading as <strong>@User.Identity?.Name</strong> (<code>@User.FindFirstValue(ClaimTypes.NameIdentifier)</code>).
-                Columns must match the <a href="~/samples/migration_sample.csv" download>sample CSV</a>.
+                Uploading as <strong>@User.Identity?.Name</strong> (<code>@User.FindFirstValue(ClaimTypes.NameIdentifier)</code>), district <code>@ViewData["DistrictId"]</code>.
+                Columns must match the <a href="~/samples/migration_sample.csv" download>sample CSV</a>. Up to @ViewData["MaxFileMegabytes"] MB.
             </div>
         </form>
     </div>
 </div>
 
-<h2 class="h5">Recent uploads</h2>
+<h2 class="h5">Recent uploads in your district</h2>
 @if (Model.Count == 0)
 {
     <p class="text-muted">Nothing uploaded yet.</p>
@@ -73,4 +73,15 @@ else
             </tbody>
         </table>
     </div>
+}
+
+@section Scripts {
+    <script>
+        // One click, one upload: stops a double-click from saving the same file twice.
+        document.getElementById("upload-form").addEventListener("submit", () => {
+            const button = document.getElementById("upload-button");
+            button.disabled = true;
+            button.textContent = "Uploading…";
+        });
+    </script>
 }
